@@ -29,7 +29,7 @@ export function HeroSection() {
             }}
           >
             <img
-              src="/profile.png"
+              src="https://i.postimg.cc/262sY6LB/Picture1.png"
               alt="Faiza Ghous"
               style={{
                 width: "100%",
