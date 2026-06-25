@@ -189,7 +189,7 @@ h1, h2, h3, h4, h5, h6 {
 .section-subtitle {
   font-family: var(--font-body);
   color: var(--color-muted);
-  font-size: 1.05rem;
+  font-size: clamp(0.9rem, 2.5vw, 1.05rem);
   line-height: 1.7;
   font-weight: 300;
 }

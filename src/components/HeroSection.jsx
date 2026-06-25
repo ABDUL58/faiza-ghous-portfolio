@@ -20,9 +20,8 @@ export function HeroSection() {
         {/* Round profile photo */}
         <div className="animate-fade-in-delay-1 flex justify-center mb-7">
           <div
+            className="w-28 h-28 sm:w-36 sm:h-36"
             style={{
-              width: 148,
-              height: 148,
               borderRadius: "50%",
               padding: 3,
               background: "linear-gradient(135deg, var(--color-primary), var(--color-accent, #818cf8), var(--color-primary))",

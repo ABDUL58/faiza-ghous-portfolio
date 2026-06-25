@@ -1,4 +1,4 @@
-﻿import { ExternalLink, BookOpen, ImageIcon } from "lucide-react";
+﻿import { ExternalLink, BookOpen } from "lucide-react";
 
 const ENTRIES = [
   {
@@ -43,41 +43,6 @@ const ENTRIES = [
   },
 ];
 
-function MediaBox({ images }) {
-  if (images.length > 0) {
-    return (
-      <div className="mt-4 flex flex-wrap gap-2">
-        {images.map((src, i) => (
-          <img
-            key={i}
-            src={src}
-            alt=""
-            className="w-24 h-16 object-cover rounded-lg"
-            style={{ border: "1px solid var(--color-border)" }}
-          />
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div
-      className="mt-4 flex items-center gap-3 rounded-xl px-4 py-3"
-      style={{
-        border: "1.5px dashed var(--color-border)",
-        background: "var(--color-accent-dim)",
-      }}
-    >
-      <ImageIcon size={16} style={{ color: "var(--color-accent)", flexShrink: 0 }} />
-      <span
-        className="text-xs"
-        style={{ color: "var(--color-muted)", fontFamily: "var(--font-display)" }}
-      >
-        Add photos — paste image paths into the <code style={{ color: "var(--color-accent)" }}>images</code> array for this entry
-      </span>
-    </div>
-  );
-}
 
 export function PublicationsSection() {
   return (
@@ -155,7 +120,6 @@ export function PublicationsSection() {
                     </a>
                   )}
 
-                  <MediaBox images={entry.images} />
                 </div>
               </div>
             </div>

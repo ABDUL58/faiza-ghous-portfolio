@@ -1,4 +1,5 @@
 ﻿import { useState } from "react";
+import { createPortal } from "react-dom";
 import { useParams, Link } from "react-router-dom";
 import {
   ArrowLeft, ExternalLink, Github, X, ChevronLeft, ChevronRight,
@@ -131,7 +132,7 @@ export function ProjectDetail() {
             src={project.mainImage}
             alt={project.title}
             className="w-full object-cover"
-            style={{ maxHeight: 460 }}
+            style={{ maxHeight: "clamp(200px, 50vw, 460px)" }}
           />
         </div>
 
@@ -155,7 +156,7 @@ export function ProjectDetail() {
         )}
 
         {/* Body */}
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Left 2/3 */}
           <div className="md:col-span-2 space-y-8">
             <Section icon={BookOpen} title="Overview">
@@ -203,7 +204,7 @@ export function ProjectDetail() {
           </div>
 
           {/* Right 1/3 */}
-          <div className="space-y-6">
+          <div className="space-y-6 md:col-span-1">
             {project.myRole?.length > 0 && (
               <div className="glass-card p-5">
                 <div className="flex items-center gap-2 mb-3">
@@ -236,9 +237,9 @@ export function ProjectDetail() {
       </div>
 
       {/* Lightbox */}
-      {selectedImg && (
+      {selectedImg && createPortal(
         <div
-          className="fixed inset-0 z-[200] flex flex-col items-center justify-center"
+          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
           style={{ background: "rgba(0,0,0,0.92)" }}
           onClick={closeLightbox}
         >
@@ -299,7 +300,8 @@ export function ProjectDetail() {
           >
             <ChevronRight size={22} />
           </button>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );

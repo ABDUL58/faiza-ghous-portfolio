@@ -1,4 +1,5 @@
 ﻿import { useState, useCallback, useEffect } from "react";
+import { createPortal } from "react-dom";
 import { X, ChevronLeft, ChevronRight, Play } from "lucide-react";
 
 const CATEGORIES = [
@@ -53,11 +54,11 @@ const CATEGORIES = [
     images: [],
     videos: [
       {
-        src: "/gallery/media-appearances/geo-news-morning-show.mp4",
+        embed: "https://streamable.com/e/l331e9",
         label: "Geo News Morning Show · 25 Nov 2025",
       },
       {
-        src: "/gallery/media-appearances/ary-morning-show.mp4",
+        embed: "https://streamable.com/e/ks2njf",
         label: "ARY Morning Show · 26 Nov 2025",
       },
     ],
@@ -80,9 +81,9 @@ function Lightbox({ images, startIndex, onClose }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose, prev, next]);
 
-  return (
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center"
+      className="fixed inset-0 z-[9999] flex items-center justify-center"
       style={{ background: "rgba(0,0,0,0.92)", backdropFilter: "blur(8px)" }}
       onClick={onClose}
     >
@@ -141,7 +142,8 @@ function Lightbox({ images, startIndex, onClose }) {
           ))}
         </div>
       )}
-    </div>
+    </div>,
+    document.body
   );
 }
 
@@ -150,7 +152,7 @@ function ImageGrid({ images }) {
 
   return (
     <>
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {images.map((src, i) => (
           <button
             key={i}
@@ -190,13 +192,16 @@ function VideoGrid({ videos }) {
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
       {videos.map((v, i) => (
         <div key={i} className="rounded-xl overflow-hidden" style={{ border: "1px solid var(--color-border)" }}>
-          <video
-            src={v.src}
-            controls
-            preload="metadata"
-            className="w-full"
-            style={{ background: "#000", display: "block" }}
-          />
+          <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
+            <iframe
+              src={v.embed}
+              title={v.label}
+              allowFullScreen
+              frameBorder="0"
+              className="absolute inset-0 w-full h-full"
+              style={{ background: "#000" }}
+            />
+          </div>
           <div
             className="px-3 py-2 flex items-center gap-2"
             style={{ background: "var(--color-card)" }}

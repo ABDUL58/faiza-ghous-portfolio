@@ -48,7 +48,7 @@ export function Navbar({ activeSection }) {
           <div />
 
           {/* Desktop links */}
-          <ul className="hidden md:flex items-center gap-1">
+          <ul className="hidden lg:flex items-center gap-1">
             {NAV_LINKS.map(({ label, href }) => (
               <li key={href}>
                 <a
@@ -72,7 +72,7 @@ export function Navbar({ activeSection }) {
             <ThemeToggle />
             {/* Hamburger */}
             <button
-              className="md:hidden z-50 w-10 h-10 flex items-center justify-center rounded-full transition-all"
+              className="lg:hidden z-50 w-10 h-10 flex items-center justify-center rounded-full transition-all"
               style={{ background: "var(--color-card)", border: "1px solid var(--color-border)" }}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
