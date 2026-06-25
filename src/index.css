@@ -245,6 +245,18 @@ h1, h2, h3, h4, h5, h6 {
 .animate-pulse-glow         { animation: pulseGlow 2.5s ease-in-out infinite; }
 .animate-bounce-slow        { animation: bounce 2s ease-in-out infinite; }
 
+/* ─── Scroll offset — prevents fixed navbar from hiding section tops ── */
+:root { --navbar-h: 64px; }
+[id] { scroll-margin-top: var(--navbar-h); }
+
+/* ─── Responsive helpers ─────────────────────────────── */
+@media (max-width: 639px) {
+  .cosmic-button, .ghost-button {
+    padding: 0.65rem 1.3rem;
+    font-size: 0.85rem;
+  }
+}
+
 /* ─── Leaflet overrides ──────────────────────────────── */
 .leaflet-container { background: transparent !important; }
 .leaflet-tile-pane { opacity: 0.55; }

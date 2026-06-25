@@ -152,7 +152,7 @@ function ImageGrid({ images }) {
 
   return (
     <>
-      <div className="grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
         {images.map((src, i) => (
           <button
             key={i}
@@ -237,16 +237,15 @@ export function GallerySection() {
             <div key={cat.id}>
               <div className="flex items-center gap-3 mb-6">
                 <h3
-                  className="font-bold"
+                  className="font-bold shrink-0 text-sm sm:text-base"
                   style={{
                     fontFamily: "var(--font-display)",
-                    fontSize: "1.1rem",
                     color: "var(--color-foreground)",
                   }}
                 >
                   {cat.label}
                 </h3>
-                <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
+                <div className="flex-1 h-px min-w-4" style={{ background: "var(--color-border)" }} />
               </div>
 
               {cat.images.length > 0 && <ImageGrid images={cat.images} />}

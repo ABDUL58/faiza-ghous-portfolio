@@ -1,4 +1,4 @@
-﻿import { ArrowDown, Linkedin, Mail } from "lucide-react";
+import { ArrowDown, Linkedin, Mail } from "lucide-react";
 
 const SOCIAL_LINKS = [
   { icon: Linkedin, href: "https://www.linkedin.com/in/faiza-baloch-a90483190/?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BT9hvAPdGQPuARc1tCyOBMQ%3D%3D", label: "LinkedIn" },
@@ -7,7 +7,7 @@ const SOCIAL_LINKS = [
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col text-center px-4 overflow-hidden">
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -15,10 +15,11 @@ export function HeroSection() {
         }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto">
+      {/* Content — padded top so it always clears the fixed navbar (h-16 = 64px) */}
+      <div className="relative z-10 flex-1 flex flex-col items-center justify-center max-w-4xl mx-auto w-full pt-24 pb-16">
 
         {/* Round profile photo */}
-        <div className="animate-fade-in-delay-1 flex justify-center mb-7">
+        <div className="animate-fade-in-delay-1 flex justify-center mb-6">
           <div
             className="w-28 h-28 sm:w-36 sm:h-36"
             style={{
@@ -52,20 +53,20 @@ export function HeroSection() {
         </h1>
 
         <p
-          className="animate-fade-in-delay-2 text-xl sm:text-2xl font-medium mb-4"
+          className="animate-fade-in-delay-2 text-base sm:text-lg md:text-xl font-medium mb-4 px-2"
           style={{ fontFamily: "var(--font-display)", color: "var(--color-muted)" }}
         >
           Climate Scientist &amp; Disaster Risk Reduction Specialist
         </p>
 
-        <p className="animate-fade-in-delay-3 section-subtitle max-w-2xl mx-auto mb-10">
+        <p className="animate-fade-in-delay-3 section-subtitle max-w-xl mx-auto mb-8 px-2">
           Dedicated to advancing climate resilience through science based decision making,
           anticipatory action, and risk informed policies, bridging the gap between climate
           science, policy, and practice to build societies capable of anticipating, preparing
           for, and responding to emerging climate and disaster risks.
         </p>
 
-        <div className="animate-fade-in-delay-4 flex flex-wrap gap-3 justify-center mb-12">
+        <div className="animate-fade-in-delay-4 flex flex-wrap gap-3 justify-center mb-8">
           <a href="#projects" className="cosmic-button">
             View My Work
             <ArrowDown size={16} />
@@ -96,7 +97,8 @@ export function HeroSection() {
         </div>
       </div>
 
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-slow">
+      {/* Scroll indicator — always anchored to bottom */}
+      <div className="relative z-10 pb-6 flex justify-center animate-bounce-slow">
         <a
           href="#about"
           aria-label="Scroll to about"

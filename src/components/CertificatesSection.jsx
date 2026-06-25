@@ -1,5 +1,6 @@
-﻿import { useState } from "react";
-import { Award, Download, X, Maximize2 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { createPortal } from "react-dom";
+import { Award, X, Maximize2 } from "lucide-react";
 
 const CERTIFICATES = [
   {
@@ -45,52 +46,67 @@ const CATEGORY_COLORS = {
   National:      { bg: "rgba(34,197,94,0.12)",  text: "#4ade80" },
 };
 
-function FullscreenViewer({ cert, onClose }) {
-  return (
+function CertModal({ cert, onClose }) {
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return createPortal(
     <div
-      className="fixed inset-0 z-50 flex flex-col"
-      style={{ background: "rgba(0,0,0,0.96)", backdropFilter: "blur(10px)" }}
+      className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
+      style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(8px)" }}
+      onClick={onClose}
     >
       <div
-        className="flex items-center justify-between px-4 py-3 shrink-0"
-        style={{ borderBottom: "1px solid var(--color-border)", background: "var(--color-card)" }}
+        className="relative flex flex-col rounded-2xl overflow-hidden"
+        style={{
+          width: "min(860px, 92vw)",
+          height: "min(620px, 88vh)",
+          background: "var(--color-card)",
+          border: "1px solid var(--color-border)",
+          boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+        }}
+        onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3">
-          <Award size={16} style={{ color: "var(--color-accent)" }} />
-          <div>
-            <p className="text-sm font-bold" style={{ fontFamily: "var(--font-display)", color: "var(--color-foreground)" }}>
-              {cert.title}
-            </p>
-            <p className="text-xs" style={{ color: "var(--color-muted)" }}>{cert.issuer}</p>
+        {/* Header */}
+        <div
+          className="flex items-center justify-between px-4 py-3 shrink-0"
+          style={{ borderBottom: "1px solid var(--color-border)" }}
+        >
+          <div className="flex items-center gap-3">
+            <Award size={16} style={{ color: "var(--color-accent)" }} />
+            <div>
+              <p
+                className="text-sm font-bold leading-tight"
+                style={{ fontFamily: "var(--font-display)", color: "var(--color-foreground)" }}
+              >
+                {cert.title}
+              </p>
+              <p className="text-xs" style={{ color: "var(--color-muted)" }}>{cert.issuer}</p>
+            </div>
           </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <a
-            href={cert.file}
-            download
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-opacity hover:opacity-75"
-            style={{ background: "var(--color-accent-dim)", color: "var(--color-accent)", fontFamily: "var(--font-display)" }}
-          >
-            <Download size={13} /> Download
-          </a>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-lg flex items-center justify-center transition-opacity hover:opacity-75"
-            style={{ background: "var(--color-accent-dim)", color: "var(--color-muted)" }}
+            className="w-8 h-8 rounded-lg flex items-center justify-center transition-opacity hover:opacity-75 flex-shrink-0"
+            style={{ background: "var(--color-accent-dim)", color: "var(--color-foreground)" }}
             aria-label="Close"
           >
             <X size={16} />
           </button>
         </div>
-      </div>
 
-      <iframe
-        src={cert.file}
-        title={cert.title}
-        className="flex-1 w-full"
-        style={{ border: "none", display: "block" }}
-      />
-    </div>
+        {/* PDF iframe */}
+        <iframe
+          src={cert.file + "#toolbar=0&navpanes=0&scrollbar=1"}
+          title={cert.title}
+          className="flex-1 w-full"
+          style={{ border: "none", display: "block" }}
+        />
+      </div>
+    </div>,
+    document.body
   );
 }
 
@@ -118,14 +134,14 @@ export function CertificatesSection() {
               return (
                 <div
                   key={i}
-                  className="gradient-border overflow-hidden flex flex-col"
+                  className="gradient-border overflow-hidden flex flex-col cursor-pointer"
                   style={{ background: "var(--color-card)" }}
+                  onClick={() => setOpenIdx(i)}
                 >
-                  {/* PDF preview box */}
+                  {/* PDF preview */}
                   <div
-                    className="relative group cursor-pointer"
+                    className="relative group"
                     style={{ height: "clamp(160px, 25vw, 220px)" }}
-                    onClick={() => setOpenIdx(i)}
                   >
                     <iframe
                       src={cert.file + "#toolbar=0&navpanes=0&scrollbar=0"}
@@ -139,44 +155,42 @@ export function CertificatesSection() {
                     >
                       <div
                         className="flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold"
-                        style={{ background: "var(--color-card)", color: "var(--color-foreground)", fontFamily: "var(--font-display)" }}
+                        style={{
+                          background: "var(--color-card)",
+                          color: "var(--color-foreground)",
+                          fontFamily: "var(--font-display)",
+                        }}
                       >
-                        <Maximize2 size={15} /> Open Full Screen
+                        <Maximize2 size={15} /> View
                       </div>
                     </div>
                   </div>
 
                   {/* Info row */}
-                  <div className="px-4 py-3 flex items-center gap-3" style={{ borderTop: "1px solid var(--color-border)" }}>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2 mb-0.5">
-                        <span
-                          className="text-[10px] font-bold px-2 py-0.5 rounded-full"
-                          style={{ background: colors.bg, color: colors.text, fontFamily: "var(--font-display)", letterSpacing: "0.06em" }}
-                        >
-                          {cert.category}
-                        </span>
-                      </div>
-                      <p
-                        className="font-bold text-sm leading-snug truncate"
-                        style={{ fontFamily: "var(--font-display)", color: "var(--color-foreground)" }}
-                      >
-                        {cert.title}
-                      </p>
-                      <p className="text-xs truncate" style={{ color: "var(--color-muted)" }}>
-                        {cert.issuer}
-                      </p>
-                    </div>
-                    <a
-                      href={cert.file}
-                      download
-                      onClick={(e) => e.stopPropagation()}
-                      className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center transition-opacity hover:opacity-75"
-                      style={{ background: "var(--color-accent-dim)", color: "var(--color-accent)" }}
-                      aria-label="Download"
+                  <div
+                    className="px-4 py-3"
+                    style={{ borderTop: "1px solid var(--color-border)" }}
+                  >
+                    <span
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-full"
+                      style={{
+                        background: colors.bg,
+                        color: colors.text,
+                        fontFamily: "var(--font-display)",
+                        letterSpacing: "0.06em",
+                      }}
                     >
-                      <Download size={15} />
-                    </a>
+                      {cert.category}
+                    </span>
+                    <p
+                      className="font-bold text-sm leading-snug mt-1 truncate"
+                      style={{ fontFamily: "var(--font-display)", color: "var(--color-foreground)" }}
+                    >
+                      {cert.title}
+                    </p>
+                    <p className="text-xs truncate" style={{ color: "var(--color-muted)" }}>
+                      {cert.issuer}
+                    </p>
                   </div>
                 </div>
               );
@@ -186,7 +200,7 @@ export function CertificatesSection() {
       </section>
 
       {openIdx !== null && (
-        <FullscreenViewer
+        <CertModal
           cert={CERTIFICATES[openIdx]}
           onClose={() => setOpenIdx(null)}
         />
