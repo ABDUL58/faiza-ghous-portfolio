@@ -9,12 +9,7 @@
     tags: ["CMIP6", "Climate Projections", "SSP Scenarios", "Heatwaves", "Extreme Weather", "Climate Resilience", "Adaptation Planning", "Temperature", "Precipitation", "Long-term Forecasting"],
     tagline: "CMIP6-Powered Climate Scenario Analysis from 2000 to 2100 for Evidence-Based Resilience and Adaptation Planning",
     mainImage: "/projects/ccop/cover.png",
-    carouselImages: [
-      "/projects/ccop/cover.png", "/projects/ccop/1.png", "/projects/ccop/2.png", "/projects/ccop/3.png",
-      "/projects/ccop/4.png", "/projects/ccop/5.png", "/projects/ccop/6.png",
-      "/projects/ccop/7.png", "/projects/ccop/8.png", "/projects/ccop/9.png",
-      "/projects/ccop/10.png",
-    ],
+    carouselImages: [],
     myRole: [
       "Climate Data Analyst: Processed and analysed CMIP6 multi model outputs for temperature and precipitation variables across multiple SSP trajectories, extracting near term and long term climate signals.",
       "Dashboard Developer: Designed and built the CCOP visualisation platform enabling scenario-based climate impact assessments with interactive regional and global views.",
@@ -64,12 +59,7 @@
     tags: ["CMIP6", "Multi Model Ensemble", "Probabilistic Projections", "Regional Downscaling", "Climate Uncertainty", "SSP Scenarios", "Seasonal Forecasting", "Adaptation Planning", "Meteorological Modelling"],
     tagline: "Reducing Climate Uncertainty Through Multi Model CMIP6 Ensemble Analysis for Regional and Local Adaptation Planning",
     mainImage: "/projects/cmip6-ensemble/cover.png",
-    carouselImages: [
-      "/projects/cmip6-ensemble/cover.png", "/projects/cmip6-ensemble/1.png", "/projects/cmip6-ensemble/2.png",
-      "/projects/cmip6-ensemble/3.png", "/projects/cmip6-ensemble/4.png",
-      "/projects/cmip6-ensemble/5.png", "/projects/cmip6-ensemble/6.png",
-      "/projects/cmip6-ensemble/7.png", "/projects/cmip6-ensemble/8.png",
-    ],
+    carouselImages: [],
     myRole: [
       "Climate Modeller: Processed and combined outputs from multiple CMIP6 models across SSP scenarios, applying bias correction and statistical ensemble methods to generate probabilistic projection ranges.",
       "Regional Downscaling Analyst: Applied downscaling techniques to translate coarse CMIP6 global outputs into localised, high resolution climate projections for specific geographic areas.",
@@ -119,12 +109,7 @@
     tags: ["Impact based Forecasting", "Early Warning Systems", "Islamabad", "Urban Flooding", "Heatwaves", "Risk Communication", "Vulnerability Assessment", "Disaster Preparedness", "Operational Meteorology", "WMO"],
     tagline: "Beyond Weather Warnings — Integrating Hazard, Vulnerability, and Exposure to Deliver Risk-Rated Forecasts for Islamabad",
     mainImage: "/projects/impact-forecasting/cover.png",
-    carouselImages: [
-      "/projects/impact-forecasting/cover.png", "/projects/impact-forecasting/1.png", "/projects/impact-forecasting/2.png",
-      "/projects/impact-forecasting/3.png", "/projects/impact-forecasting/4.png",
-      "/projects/impact-forecasting/5.png", "/projects/impact-forecasting/6.png",
-      "/projects/impact-forecasting/7.png", "/projects/impact-forecasting/8.png",
-    ],
+    carouselImages: [],
     myRole: [
       "Operational Meteorologist: Generated short term, mid term, and long term weather forecasts using meteorological models and observational data, forming the hazard input layer for impact assessment.",
       "Impact Analyst: Integrated meteorological hazard predictions with vulnerability and exposure datasets to produce risk rated impact forecasts for urban flooding, heatwaves, and severe weather events.",
@@ -174,12 +159,7 @@
     tags: ["Seismic Hazard", "Coulomb Failure Stress", "Earthquake Triggering", "Climate Change", "Himalaya", "Pakistan", "Geophysical Modelling", "Tectonic Analysis", "InSAR", "GNSS", "Predictive Modelling"],
     tagline: "Bridging Tectonic Science and Climate Data to Build Predictive Models for Earthquake Hazard in Pakistan's Himalayan Region",
     mainImage: "/projects/seismic-events/cover.png",
-    carouselImages: [
-      "/projects/seismic-events/cover.png", "/projects/seismic-events/1.png", "/projects/seismic-events/2.png",
-      "/projects/seismic-events/3.png", "/projects/seismic-events/4.png",
-      "/projects/seismic-events/5.png", "/projects/seismic-events/6.png",
-      "/projects/seismic-events/7.png", "/projects/seismic-events/8.png",
-    ],
+    carouselImages: [],
     myRole: [
       "Principal Researcher: Led M.Phil. thesis research on Coulomb Failure Stress (CFS) modelling for static earthquake triggering in the Central Himalayan region of Pakistan — Quaid-e-Azam University 2022.",
       "Geophysical Analyst: Applied Coulomb Failure Stress modelling to identify seismically vulnerable zones, potential aftershock regions, and stress redistribution patterns following major seismic events.",

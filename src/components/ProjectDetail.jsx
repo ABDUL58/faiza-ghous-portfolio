@@ -1,9 +1,7 @@
-﻿import { useState } from "react";
-import { createPortal } from "react-dom";
 import { useParams, Link } from "react-router-dom";
 import {
-  ArrowLeft, ExternalLink, Github, X, ChevronLeft, ChevronRight,
-  Layers, Users, Cpu, Star, AlertTriangle, BookOpen,
+  ArrowLeft, ExternalLink, Github,
+  Users, Cpu, Star, AlertTriangle, BookOpen,
 } from "lucide-react";
 import { projects } from "@/data/projectsData";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -11,9 +9,6 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 export function ProjectDetail() {
   const { projectId } = useParams();
   const project = projects.find((p) => String(p.id) === projectId);
-
-  const [selectedImg, setSelectedImg]     = useState(null);
-  const [currentImgIdx, setCurrentImgIdx] = useState(0);
 
   if (!project) {
     return (
@@ -30,26 +25,6 @@ export function ProjectDetail() {
       </div>
     );
   }
-
-  const allImages = (() => {
-    const raw = project.carouselImages?.length
-      ? [project.mainImage, ...project.carouselImages]
-      : [project.mainImage];
-    return raw.filter((img, idx) => raw.indexOf(img) === idx);
-  })();
-
-  const openLightbox = (img, idx) => { setSelectedImg(img); setCurrentImgIdx(idx); };
-  const closeLightbox = () => setSelectedImg(null);
-  const prevImg = () => {
-    const newIdx = (currentImgIdx - 1 + allImages.length) % allImages.length;
-    setCurrentImgIdx(newIdx);
-    setSelectedImg(allImages[newIdx]);
-  };
-  const nextImg = () => {
-    const newIdx = (currentImgIdx + 1) % allImages.length;
-    setCurrentImgIdx(newIdx);
-    setSelectedImg(allImages[newIdx]);
-  };
 
   const Section = ({ icon: Icon, title, children }) => (
     <div className="mb-8">
@@ -122,38 +97,18 @@ export function ProjectDetail() {
           </div>
         </div>
 
-        {/* Main image */}
+        {/* Cover image only */}
         <div
-          className="w-full rounded-2xl overflow-hidden mb-6 cursor-pointer"
-          style={{ background: "var(--color-accent-dim)", minHeight: 220 }}
-          onClick={() => openLightbox(project.mainImage, 0)}
+          className="w-full rounded-2xl overflow-hidden mb-10"
+          style={{ background: "var(--color-accent-dim)" }}
         >
           <img
             src={project.mainImage}
             alt={project.title}
             className="w-full object-cover"
-            style={{ maxHeight: "clamp(200px, 50vw, 460px)" }}
+            style={{ maxHeight: "clamp(200px, 50vw, 460px)", display: "block" }}
           />
         </div>
-
-        {/* Thumbnail strip */}
-        {project.carouselImages?.length > 0 && (
-          <div className="flex gap-3 overflow-x-auto no-scrollbar mb-10">
-            {[project.mainImage, ...project.carouselImages].map((img, idx) => (
-              <div
-                key={idx}
-                className="flex-shrink-0 w-24 h-16 rounded-xl overflow-hidden cursor-pointer transition-all hover:scale-105"
-                style={{
-                  background: "var(--color-accent-dim)",
-                  border: currentImgIdx === idx ? "2px solid var(--color-primary)" : "2px solid transparent",
-                }}
-                onClick={() => openLightbox(img, idx)}
-              >
-                <img src={img} alt={`thumb-${idx}`} className="w-full h-full object-cover" />
-              </div>
-            ))}
-          </div>
-        )}
 
         {/* Body */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -235,74 +190,6 @@ export function ProjectDetail() {
           </div>
         </div>
       </div>
-
-      {/* Lightbox */}
-      {selectedImg && createPortal(
-        <div
-          className="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-          style={{ background: "rgba(0,0,0,0.92)" }}
-          onClick={closeLightbox}
-        >
-          {/* Close */}
-          <button
-            className="absolute top-4 right-4 w-10 h-10 rounded-full flex items-center justify-center z-10"
-            style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}
-            onClick={closeLightbox}
-          >
-            <X size={20} />
-          </button>
-
-          {/* Image */}
-          <img
-            src={selectedImg}
-            alt="fullscreen"
-            className="max-w-[92vw] max-h-[78vh] rounded-xl object-contain"
-            onClick={(e) => e.stopPropagation()}
-          />
-
-          {/* Counter */}
-          <div
-            className="mt-3 text-xs"
-            style={{ color: "rgba(255,255,255,0.5)", fontFamily: "var(--font-display)" }}
-          >
-            {currentImgIdx + 1} / {allImages.length}
-          </div>
-
-          {/* Prev / Next — bottom row on mobile, sides on larger screens */}
-          <div className="flex gap-4 mt-4 sm:hidden">
-            <button
-              className="w-11 h-11 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}
-              onClick={(e) => { e.stopPropagation(); prevImg(); }}
-            >
-              <ChevronLeft size={22} />
-            </button>
-            <button
-              className="w-11 h-11 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}
-              onClick={(e) => { e.stopPropagation(); nextImg(); }}
-            >
-              <ChevronRight size={22} />
-            </button>
-          </div>
-
-          <button
-            className="hidden sm:flex absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}
-            onClick={(e) => { e.stopPropagation(); prevImg(); }}
-          >
-            <ChevronLeft size={22} />
-          </button>
-          <button
-            className="hidden sm:flex absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full items-center justify-center"
-            style={{ background: "rgba(255,255,255,0.12)", color: "#fff" }}
-            onClick={(e) => { e.stopPropagation(); nextImg(); }}
-          >
-            <ChevronRight size={22} />
-          </button>
-        </div>,
-        document.body
-      )}
     </div>
   );
 }
